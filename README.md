@@ -8,25 +8,25 @@ AGUSTÍN RECOBA CLAUDIO – C.I.: 5.469.187-5
 
 # Índice
 
-**[Índice](#_heading=h.h9ik05mn2z9s) 2**
+**[Índice](#Índice)**
 
-**[Introducción](#_heading=h.o6a4c6g24l3j) 3**
+**[Introducción](#Introducción)**
 
-**[Solución propuesta](#_heading=h.ndl8efsjemhy) 3**
+**[Solución propuesta](#Solución-propuesta)**
 
-[Posibles soluciones](#_heading=h.kol2sy5lbzfd) 3
+[Posibles soluciones](#Posibles-soluciones) 
 
-[Solución elegida](#_heading=h.gc3h76vlxm0) 4
+[Solución elegida](#Solución-elegida) 
 
-[Aspectos pendientes o irresueltos](#_heading=h.vpasfew7upxi) 7
+[Aspectos pendientes o irresueltos](#Aspectos-pendientes-o-irresueltos) 
 
-**[Pruebas realizadas](#_heading=h.olgc04h867am) 7**
+**[Pruebas realizadas](#Pruebas-realizadas)**
 
-[Descripción de las pruebas](#_heading=h.v87yadqe18bp) 7
+[Descripción de las pruebas](#Descripción-de-las-pruebas) 
 
-[Análisis de los resultados obtenidos](#_heading=h.6lfk7dlsb51o) 8
+[Análisis de los resultados obtenidos](#Análisis-de-los-resultados-obtenidos) 
 
-**[Conclusiones](#_heading=h.6me8i8txwzz5) 8**
+**[Conclusiones](#Conclusiones)**
 
 #
 
@@ -85,7 +85,29 @@ La elección tomada sobre la representación de las estructuras en memoria es la
 
 El siguiente pseudocódigo resume las decisiones tomadas:
 
-![](RackMultipart20220107-4-1ux3o1k_html_cb23261b1c21978e.gif)
+    disable()
+    Configurar el vector de interrupciones
+    while (entrada != HAB)
+        Leer configuraciones
+        Inicializar canales
+    endwhile
+    enable()
+    while (true)
+        Para cada canal configurado:
+        Si (hay flanco ascendente en PP_control):
+            Agregar dato al buffer.
+        Guardar el dato PP_control
+    fin while
+    
+    Procedimiento timer():
+    Para cada canal configurado:
+        Decrementar tics restantes
+        Si (tics restantes == 0):
+            Quitar dato del buffer.
+            Enviar el dato por PC
+            tics restantes := frecuencia consumo.
+        fin si
+    fin procedimiento
 
 Nota: Quitar dato y Agregar dato deben verificar las condiciones de underflow y overflow respectivamente.
 
